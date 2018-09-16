@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Landing from './Landing';
+import StartPage from './StartPage';
 import Header from './Header';
 import * as actions from '../actions';
 
@@ -12,7 +12,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={StartPage} />
           </div>
         </BrowserRouter>
       </div>

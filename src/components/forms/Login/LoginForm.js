@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import loginFormFields from './loginFormFields';
-import LoginField from './LoginField';
-import { login } from '../../actions';
+import { loginFormFields } from './formFields';
+import InputField from '../InputField';
+import { login } from '../../../actions';
 
 class LoginForm extends Component {
 
+    constructor(props) {
+        super(props);
+    }
+  
     render() {
         const { handleSubmit } = this.props;
 
@@ -23,15 +27,14 @@ class LoginForm extends Component {
     }
 
     renderFields = () => {
-        return loginFormFields.map( ({label, name}) => {
-            return <Field key={name} component={LoginField} type="text" label={label} name={name}/>
+        return loginFormFields.map( ({label, name, type}) => {
+            return <Field key={name} component={InputField} label={label} name={name} type={type}/>
         });
     };
 
     onSubmit(values) {
-        this.props.login(values, () => this.props.login(values.email, values.password));
+        this.props.login(values, () => this.props.login(values));
     }
-
 }
 
 export default reduxForm({
