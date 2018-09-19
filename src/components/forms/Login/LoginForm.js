@@ -10,10 +10,17 @@ class LoginForm extends Component {
     constructor(props) {
         super(props);
     }
+
+    showMessage() {
+        if (this.props.authError) {
+            return (
+                <h5>{this.props.authError}</h5>
+            );
+        }
+    }
   
     render() {
         const { handleSubmit } = this.props;
-
         return (
             <div>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -21,6 +28,7 @@ class LoginForm extends Component {
                     <button type="submit">
                         Login
                     </button>
+                    {this.showMessage()}
                 </form>
             </div>
         );    
@@ -37,8 +45,12 @@ class LoginForm extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return { authError: state.authError }
+};
+
 export default reduxForm({
     form: 'loginForm'
 })(
-    connect(null, { login })(LoginForm)
+    connect(mapStateToProps, { login })(LoginForm)
 );

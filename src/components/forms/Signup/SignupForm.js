@@ -17,18 +17,8 @@ class SignupForm extends Component {
 
     render() {
         const { handleSubmit } = this.props;
-        if (this.state.verifyPageHidden) {
-            return (
-                <div>
-                    <form onSubmit={handleSubmit(this.signup.bind(this))}>
-                        {this.renderSignupForm()}
-                        <button type="submit">
-                            Signup
-                        </button>
-                    </form>
-                </div>
-            );        
-        } else {
+        console.log(this.props.auth, "auth");
+        if (this.props.auth && !this.props.auth.userConfirmed) {
             return (
                 <div>
                     <form onSubmit={handleSubmit(this.verifyCode.bind(this))}>
@@ -39,6 +29,18 @@ class SignupForm extends Component {
                     </form>
                 </div>
             );
+
+        } else {
+            return (
+                <div>
+                    <form onSubmit={handleSubmit(this.signup.bind(this))}>
+                        {this.renderSignupForm()}
+                        <button type="submit">
+                            Signup
+                        </button>
+                    </form>
+                </div>
+            );        
         }
     }
 
@@ -55,18 +57,22 @@ class SignupForm extends Component {
     };
 
     signup(values) {        
-        this.props.signup(values, () => this.props.login(values.email, values.password));
-        this.setState({ verifyPageHidden: false});
+        this.props.signup(values, () => this.props.signup(values));
     }
 
     verifyCode(values) {
-        this.props.verifyCode(values, () => this.props.login(values));
+        this.props.verifyCode(values, () => this.props.verifyCode(values));
     }
 }
 
 
+const mapStateToProps = (state) => {
+    console.log(state, "signupform");
+    return { auth: state.auth }
+};
+
 export default reduxForm({
     form: 'signupForm'
 })(
-    connect(null, { signup, verifyCode })(SignupForm)
+    connect(mapStateToProps, { signup, verifyCode })(SignupForm)
 );
