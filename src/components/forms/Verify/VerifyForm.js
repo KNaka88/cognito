@@ -2,20 +2,35 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { verifyCodeFields } from './formFields';
 import InputField from '../InputField';
+import {Button, Grid, Card, CardContent} from '@material-ui/core';
 import  * as authService from '../../../services/AuthService';
 
 class VerifyForm extends Component {
 
+    centerWrapper = {
+        display: 'flex',
+        justifyContent: 'center'
+    }
+
+    // render
     render() {
         const { handleSubmit } = this.props;
         return (
             <div>
-                <form onSubmit={handleSubmit(this.verifyCode.bind(this))}>
-                    {this.renderVerifyForm()}
-                    <button type="submit">
-                        Verify
-                    </button>
-                </form>
+                <Grid container justify="center">
+                    <Card>
+                        <CardContent>
+                            <form onSubmit={handleSubmit(this.verifyCode.bind(this))}>
+                                {this.renderVerifyForm()}
+                                <div style={this.centerWrapper}>
+                                    <Button type="submit" variant="raised" color="primary">
+                                        Verify
+                                    </Button>
+                                </div>
+                            </form>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </div>
         );
     }
@@ -26,6 +41,7 @@ class VerifyForm extends Component {
         });
     };
 
+    // logic
     verifyCode(values) {
         authService.verifyCode(values)
             .then(async () => {
