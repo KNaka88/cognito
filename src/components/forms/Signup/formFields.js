@@ -4,7 +4,3 @@ export const signupFormFields = [
     { label: 'Email', name: 'email', type: 'email'},
     { label: 'Password', name: 'password', type: 'password'}
   ];
-
-  export const verifyCodeFields = [
-    { label: 'Code', name: 'code', type: 'number'},
-  ];
