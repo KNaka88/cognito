@@ -24,3 +24,13 @@ export const login = (values) => {
     const { email, password } = values;
     return Auth.signIn(email, password);
 };
+
+export const resetPassword = (values) => {
+    const { email } = values;
+    return Auth.forgotPassword(email);
+};
+
+export const updatePassword = (values) => {
+    const { email, code, newPassword } = values;
+    return Auth.forgotPasswordSubmit(email, code, newPassword);
+};
