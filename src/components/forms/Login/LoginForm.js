@@ -16,18 +16,19 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props);
+        this.state = { 
+            errorMessageVisible: false
+        };
     }
-
-    // showErrorMessage() {
-    //     if (this.props.authError) {
-    //         return (
-    //             <h5>{this.props.authError}</h5>
-    //         );
-    //     }
-    // }
   
     render() {
         const { handleSubmit } = this.props;
+        const errorMessage = 
+            <div>
+                <p>Email or Password is incorrect</p>
+                <h6>Forgot Password?</h6>
+            </div>;
+
         return (
             <div>
                 <Grid container justify="center">
@@ -40,7 +41,7 @@ class LoginForm extends Component {
                                         Login
                                     </Button>
                                 </div>
-                                {/* {this.showMessage()} */}
+                                {this.state.errorMessageVisible ? errorMessage : ""}
                             </form>
                         </CardContent>
                     </Card>
@@ -56,12 +57,14 @@ class LoginForm extends Component {
     };
 
     login(values) {
+        this.setState({errorMessage: ""});
+
         authService.login(values) 
-            .then((user) => {
+            .then(() => {
                 this.props.fetchUser();                
             })
             .catch(err => {
-                console.log(err);
+                this.setState({errorMessageVisible : true});
             });
     };
 }
