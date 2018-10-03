@@ -3,7 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import { signupFormFields } from './formFields';
 import InputField from '../InputField';
 import  * as authService from '../../../services/AuthService';
-import {Button, Card, CardContent, Grid, FormGroup } from '@material-ui/core';
+import {Button, Card, CardContent, Grid } from '@material-ui/core';
 
 class SignupForm extends Component {
     centerWrapper = {

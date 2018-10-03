@@ -1,6 +1,5 @@
 import { Auth } from 'aws-amplify';
 
-
 export const signup = (values) => { 
     const { email, password, firstName, lastName } = values;
 
@@ -21,3 +20,7 @@ export const verifyCode = (values) => {
     return Auth.confirmSignUp(email, code, { forceAliasCreation: true });
 };
 
+export const login = (values) => {
+    const { email, password } = values;
+    return Auth.signIn(email, password);
+};

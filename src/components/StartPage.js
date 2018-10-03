@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import LoginForm from './forms/Login/LoginForm';
-import SignupForm from './forms/Signup/SignupForm';
-import VerifyForm from './forms/Verify/VerifyForm';
+import { Link } from "react-router-dom";
 
 class StartPage extends Component {
     constructor(props) {
@@ -10,19 +8,13 @@ class StartPage extends Component {
             isSignupFormVisible: true
         };
     }
-
-    hideSignupForm() {
-        this.setState({
-            isSignupFormVisible : false
-        });
-    }
-
     render() {
-        if (this.state.isSignupFormVisible) {
-            return <SignupForm hideSignupForm={this.hideSignupForm.bind(this)}></SignupForm>;            
-        } else {
-            return <VerifyForm></VerifyForm>;
-        }
+        return (
+            <div>
+                <h1> Three Things </h1>
+                <Link to="/dashboard">Dashboard</Link>
+            </div>
+        );
     }
 };
 

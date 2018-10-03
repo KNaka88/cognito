@@ -3,33 +3,48 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { loginFormFields } from './formFields';
 import InputField from '../InputField';
-import { login } from '../../../actions';
+import  * as authService from '../../../services/AuthService';
+import {Button, Card, CardContent, Grid } from '@material-ui/core';
+import { fetchUser } from '../../../actions';
+
 
 class LoginForm extends Component {
+    centerWrapper = {
+        display: 'flex',
+        justifyContent: 'center'
+    }
 
     constructor(props) {
         super(props);
     }
 
-    showMessage() {
-        if (this.props.authError) {
-            return (
-                <h5>{this.props.authError}</h5>
-            );
-        }
-    }
+    // showErrorMessage() {
+    //     if (this.props.authError) {
+    //         return (
+    //             <h5>{this.props.authError}</h5>
+    //         );
+    //     }
+    // }
   
     render() {
         const { handleSubmit } = this.props;
         return (
             <div>
-                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    {this.renderFields()}
-                    <button type="submit">
-                        Login
-                    </button>
-                    {this.showMessage()}
-                </form>
+                <Grid container justify="center">
+                    <Card>
+                        <CardContent>
+                            <form onSubmit={handleSubmit(this.login.bind(this))}>
+                                {this.renderFields()}
+                                <div style={this.centerWrapper}>
+                                    <Button type="submit" variant="raised" color="primary">
+                                        Login
+                                    </Button>
+                                </div>
+                                {/* {this.showMessage()} */}
+                            </form>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </div>
         );    
     }
@@ -40,17 +55,20 @@ class LoginForm extends Component {
         });
     };
 
-    onSubmit(values) {
-        this.props.login(values, () => this.props.login(values));
-    }
+    login(values) {
+        authService.login(values) 
+            .then((user) => {
+                this.props.fetchUser();                
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
 }
 
-const mapStateToProps = (state) => {
-    return { authError: state.authError }
-};
-
 export default reduxForm({
-    form: 'loginForm'
+    form: 'loginForm',
+    destroyOnUnmount: true
 })(
-    connect(mapStateToProps, { login })(LoginForm)
+    connect(null, { fetchUser })(LoginForm)
 );
