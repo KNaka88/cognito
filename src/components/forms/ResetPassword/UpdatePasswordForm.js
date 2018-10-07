@@ -3,6 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import { newPasswordFormFields } from './formFields';
 import InputField from '../InputField';
 import  * as authService from '../../../services/AuthService';
+import * as formValidation from '../../../services/FormValidation';
 import {Button, Card, CardContent, Grid } from '@material-ui/core';
 
 class UpdatePasswordForm extends Component {
@@ -15,7 +16,7 @@ class UpdatePasswordForm extends Component {
         super(props);
         this.state = { 
             successMessageVisible: false,
-            errorMessageVisible: false
+            errorMessage: ''
         };
     }
   
@@ -23,7 +24,6 @@ class UpdatePasswordForm extends Component {
         const { handleSubmit } = this.props;
 
         const successMessage =  <p>Successfully reset Password</p>;
-        const errorMessage = <div>Error has occurred</div>;
 
         return (
             <div>
@@ -37,7 +37,7 @@ class UpdatePasswordForm extends Component {
                                         Submit
                                     </Button>
                                 </div>
-                                {this.state.errorMessageVisible ? errorMessage : ""}
+                                {this.state.errorMessage ? this.state.errorMessage : ""}
                                 {this.state.successMessageVisible ? successMessage : ""}
                             </form>
                         </CardContent>
@@ -56,26 +56,43 @@ class UpdatePasswordForm extends Component {
     updatePassword(values) {
         this.resetMessageVisibility();
 
-        // TODO: check if newPassword & confirmPassword matches before calling authService
         authService.updatePassword(values) 
-            .then((success) => {
-                this.setState({successMessageVisible : true});
-            })
-            .catch(err => {
-                this.setState({errorMessageVisible : true});
-            });
+        .then((success) => {
+            this.setState({successMessageVisible : true});
+        })
+        .catch(err => {
+            this.setState({errorMessage : err.message});
+        });
     };
 
 
     resetMessageVisibility() {
         this.setState({
             successMessageVisible: false, 
-            errorMessageVisible: false
+            errorMessage: ''
         });
     }
 }
 
+
+function validate(values) {
+    const errors = {};
+  
+    errors.newPassword = formValidation.passwordValidation(values.newPassword || '');
+    errors.confirmNewPassword = formValidation.passwordMatchValidation(values.newPassword, values.confirmNewPassword);
+
+    newPasswordFormFields.forEach(({ name }) => {
+      if (!values[name]) {
+        errors[name] = 'Required field';
+      }
+    });
+  
+    return errors;
+  }
+
+
 export default reduxForm({
+    validate,
     form: 'resetPasswordForm',
     destroyOnUnmount: true
 })(UpdatePasswordForm);

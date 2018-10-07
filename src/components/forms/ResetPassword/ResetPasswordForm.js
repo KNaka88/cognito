@@ -5,6 +5,7 @@ import InputField from '../InputField';
 import  * as authService from '../../../services/AuthService';
 import {Button, Card, CardContent, Grid } from '@material-ui/core';
 import UpdatePasswordForm from './UpdatePasswordForm';
+import * as FormValidation from '../../../services/FormValidation';
 
 class ResetPasswordForm extends Component {
     centerWrapper = {
@@ -15,15 +16,13 @@ class ResetPasswordForm extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            errorMessageVisible: false,
-            isVerificationCodeSent: false
+            errorMessage: '',
+            isVerificationCodeSent: false,
         };
     }
   
     render() {
         const { handleSubmit } = this.props;
-        const errorMessage = <div>Error has occurred</div>;
-
         if (this.state.isVerificationCodeSent) {
             return <UpdatePasswordForm/>
         } else {
@@ -39,7 +38,7 @@ class ResetPasswordForm extends Component {
                                             Reset Password
                                         </Button>
                                     </div>
-                                    {this.state.errorMessageVisible ? errorMessage : ""}
+                                    {this.state.errorMessage ? this.state.errorMessage : ""}
                                 </form>
                             </CardContent>
                         </Card>
@@ -59,19 +58,19 @@ class ResetPasswordForm extends Component {
         this.resetMessageVisibility();
 
         authService.resetPassword(values) 
-            .then(() => {
-                this.setState({isVerificationCodeSent : true});
-            })
-            .catch(() => {
-                this.setState({errorMessageVisible : true});
-            });
+        .then(() => {
+            this.setState({isVerificationCodeSent : true});
+        })
+        .catch((error) => {
+            this.setState({errorMessage : error.message});
+        });
     };
 
 
     resetMessageVisibility() {
         this.setState({
             successMessageVisible: false, 
-            errorMessageVisible: false
+            errorMessage: ''
         });
     }
 }

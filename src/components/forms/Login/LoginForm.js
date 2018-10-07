@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loginFormFields } from './formFields';
 import InputField from '../InputField';
 import  * as authService from '../../../services/AuthService';
+import * as formValidation from '../../../services/FormValidation';
 import {Button, Card, CardContent, Grid } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import { fetchUser } from '../../../actions';
@@ -70,11 +71,26 @@ class LoginForm extends Component {
     };
 }
 
+function validate(values) {
+    const errors = {};
+
+    errors.email = formValidation.emailValidation(values.email || '');
+
+    loginFormFields.forEach(({ name }) => {
+      if (!values[name]) {
+        errors[name] = 'Required field';
+      }
+    });
+  
+    return errors;
+}
+
 function mapStateToProps({auth}) {
     return { auth };            
 }
 
 export default reduxForm({
+    validate,
     form: 'loginForm',
     destroyOnUnmount: true
 })(

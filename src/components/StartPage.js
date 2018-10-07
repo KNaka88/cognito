@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import SignupForm from './forms/Signup/SignupForm';
 
 class StartPage extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class StartPage extends Component {
         return (
             <div>
                 <h1> Three Things </h1>
+                <SignupForm></SignupForm>
                 <Link to="/dashboard">Dashboard</Link>
             </div>
         );
