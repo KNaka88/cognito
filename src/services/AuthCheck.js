@@ -1,7 +1,7 @@
 import React, {Component} from 'react'; 
 import { connect } from 'react-redux';
-import LoginForm from '../components/forms/Login/LoginForm';
 import { fetchUser } from '../actions';
+import WelcomePage from '../components/WelcomePage';
 
 const withAuthCheck = (WrappedComponent) => {
     class WithAuthCheck extends Component {
@@ -19,10 +19,10 @@ const withAuthCheck = (WrappedComponent) => {
         render() {
             if (this.props.auth && this.props.auth.user) {
                 return <WrappedComponent />
-            } else if(this.props.auth == null) {
+            } else if (this.props.auth == null) {
                 return "";
             } else {
-                return <LoginForm />
+                return <WelcomePage/>
             }
         }
     };
