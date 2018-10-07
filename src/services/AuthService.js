@@ -23,6 +23,10 @@ export const login = (values) => {
     return Auth.signIn(email, password);
 };
 
+export const signout = () => {
+    return Auth.signOut();
+}
+
 export const resetPassword = (values) => {
     const { email } = values;
     return Auth.forgotPassword(email);
