@@ -41,7 +41,6 @@ class VerifyForm extends Component {
         });
     };
 
-    // logic
     verifyCode(values) {
         authService.verifyCode(values)
             .then(async () => {

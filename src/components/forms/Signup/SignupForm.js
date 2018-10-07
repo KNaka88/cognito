@@ -5,7 +5,7 @@ import InputField from '../InputField';
 import  * as authService from '../../../services/AuthService';
 import {Button, Card, CardContent, Grid } from '@material-ui/core';
 import * as formValidation from '../../../services/FormValidation';
-import VerifyForm from '../Verify/VerifyForm';
+import VerifyForm from './VerifyForm';
 
 class SignupForm extends Component {
     centerWrapper = {
