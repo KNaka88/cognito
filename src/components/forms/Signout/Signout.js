@@ -12,7 +12,7 @@ class Signout extends Component {
     render() {
         return (
             <div>
-                <a  className="link"
+                <a className="link"
                     onClick={this.signout.bind(this)}>
                     Sign out
                 </a>
@@ -26,9 +26,5 @@ class Signout extends Component {
     }
 };
 
-function mapStateToProps({auth}) {
-    return { auth };            
-}
-
-export default connect(mapStateToProps, {fetchUser})(Signout);
+export default connect(null, {fetchUser})(Signout);
 
