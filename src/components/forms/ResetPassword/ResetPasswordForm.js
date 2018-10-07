@@ -5,7 +5,6 @@ import InputField from '../InputField';
 import  * as authService from '../../../services/AuthService';
 import {Button, Card, CardContent, Grid } from '@material-ui/core';
 import UpdatePasswordForm from './UpdatePasswordForm';
-import * as FormValidation from '../../../services/FormValidation';
 
 class ResetPasswordForm extends Component {
     centerWrapper = {

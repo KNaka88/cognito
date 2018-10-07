@@ -9,9 +9,7 @@ export const emailValidation = (email) => {
     }
 };
 
-
-  export const passwordValidation = (password) => {
-    
+export const passwordValidation = (password) => {    
     const longLength = password.length >= 6;
     const includeUpperLowerCase = password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/);
     const includeNumber = password.match(/([0-9])/);
@@ -27,7 +25,6 @@ export const emailValidation = (email) => {
 };
 
 export const passwordMatchValidation = (password, confirmPassword) => { 
-    
     if (password === confirmPassword) {
         return '';
     } else {

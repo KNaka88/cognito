@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import withAuthCheck from '../services/AuthCheck';
 
 
@@ -14,8 +13,4 @@ class Dashboard extends Component {
     }
 };
 
-function mapStateToProps({auth}) {
-    return { auth };
-}
-
-export default withAuthCheck(connect(mapStateToProps)(Dashboard)); 
+export default withAuthCheck(Dashboard); 
