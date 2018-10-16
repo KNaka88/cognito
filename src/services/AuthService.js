@@ -36,3 +36,8 @@ export const updatePassword = (values) => {
     const { email, code, newPassword } = values;
     return Auth.forgotPasswordSubmit(email, code, newPassword);
 };
+
+export const changePassword = (user, values) => {
+    const { currentPassword, newPassword } = values;
+    return Auth.changePassword(user, currentPassword, newPassword);
+};

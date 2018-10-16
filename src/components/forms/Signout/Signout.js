@@ -5,10 +5,6 @@ import * as authService from '../../../services/AuthService';
 import './styles.css';
 
 class Signout extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

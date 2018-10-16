@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Header from './Header';
 import ResetPassword from './ResetPassword';
+import ChangePassword from './ChangePassword';
 
 class App extends Component {
 
@@ -14,6 +15,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Dashboard} />
             <Route path="/resetPassword" component={ResetPassword}/>
+            <Route path="/changePassword" component={ChangePassword} />
           </div>
         </BrowserRouter>
       </div>
